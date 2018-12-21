@@ -1,6 +1,6 @@
 <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
 	<div class="navbar-brand">
-		<a class="navbar-item" href="/">SNOWPATCH</a>
+		<a class="navbar-item"><b>SNOW</b>PATCH</a>
 
 		<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
 			<span aria-hidden="true"></span>
@@ -13,6 +13,7 @@
 		<div class="navbar-start">
 			<a class="navbar-item is-active" href="/organizations">Organizations</a>
 			<a class="navbar-item">Contacts</a>
+			<a class="navbar-item">Jobsites</a>
 
 <!-- if($user->isAdmin()) -->
 			<div class="navbar-item has-dropdown is-hoverable">

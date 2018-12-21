@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
 	const TYPE_UNKNOWN = 0;
-	const TYPE_RESIDENTIAL = 1;
-	const TYPE_COMMERCIAL = 2;
-	const TYPE_GOVERNMENT = 3;
+	const TYPE_LEAD = 1;
+	const TYPE_CLIENT = 2;
+	const TYPE_VENDOR = 3;
+	const TYPE_SUBCONTRACTOR = 4;
 	
 	protected static $validate = [
 		'name' => 'required',

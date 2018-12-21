@@ -20,41 +20,34 @@
 	
 	<!-- end top navigation -->
 
-
-
-
-	<section class="section">
-		<div class="container">
-			<nav class="level">
-				<div class="level-left">
-					<div class="level-item">
-						<p class="subtitle is-5"><a href="/">Home</a></p>
+	<div class="container">
+		<nav class="level">
+			<div class="level-left">
+				<div class="level-item">
+					<div class="field has-addons">
+						<p class="control">
+							<input class="input" type="text" placeholder="Search @yield('module_name')">
+						</p>
+						<p class="control">
+							<button class="button">Search</button>
+						</p>
 					</div>
-					<div class="level-item">
-						<div class="field has-addons">
-							<p class="control">
-								<input class="input" type="text" placeholder="Search @yield('module_name')">
-							</p>
-							<p class="control">
-								<button class="button">Search</button>
-							</p>
-						</div>
-					</div>
-				</div> <!-- level-left -->
+				</div>
+			</div> <!-- level-left -->
 
-				<div class="level-right">
-					<p class="level-item"><a href="/organizations"><strong>All</strong></a></p>
-					<p class="level-item">Clients</p>
-					<p class="level-item">Vendors</p>
-					<p class="level-item">Leads</p>
-					<p class="level-item"><a class="button is-success" href="/organizations/create">New</a></p>
-				</div> <!-- level-right -->
-			</nav>
+			<div class="level-right">
+				<p class="level-item"><a href="/organizations"><strong>All</strong></a></p>
+				<p class="level-item">Clients</p>
+				<p class="level-item">Vendors</p>
+				<p class="level-item">Leads</p>
+				<p class="level-item"><a class="button is-success" href="/organizations/create">New</a></p>
+			</div> <!-- level-right -->
+		</nav>
 
-		@yield('content')
+	@yield('content')
 
-		</div> <!-- container -->
-	</section>
+	</div> <!-- container -->
+
 </body>
 </html>
 
