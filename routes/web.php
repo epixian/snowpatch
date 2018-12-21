@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('/organizations', 'OrganizationsController');
+
+Route::resource('/jobsites', 'JobsitesController');

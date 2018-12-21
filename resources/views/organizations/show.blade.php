@@ -8,55 +8,24 @@ organizations
 	<h1 class="title">{{ $organization->name }}</h1>
 	<div class="content columns">
 		<div class="column">
-			<div class="card">
-				<div class="card-content">
-					<p class="level-item">{{ $organization->address_line_1 }}</p>
-					<p class="level-item">{{ $organization->address_line_2 }}</p>
-					<p class="level-item">{{ $organization->city }}</p>
-					<p class="level-item">{{ $organization->state}}</p>
-					<p class="level-item">{{ $organization->postal_code}}</p>
-					<p class="level-item">{{ $organization->country }}</p>
-				</div>
-				<footer class="card-footer">
-					<p class="card-footer-item">
-						<span>
-							<a href="/organizations/{{ $organization->id }}/edit">Edit</a>
-						</span<
-					</p>
-				</footer>
-			</div>
-		</div> <!-- level-left -->
+		
+			@include('layouts.cards.organization_address')
+			
+			@if ($organization->contacts->count())
+			<section class="container">
+				@foreach ($organization->contacts as $contact)
+				@include('layouts.cards.contact_info')
+				@endforeach
+			</section> <!-- contact list -->
+			@endif
+			
+		</div> <!-- column 1 -->
 
 		<div class="column">
-			<section class="panel">
-				<p class="panel-heading">
-					Jobsites
-				</p>
-				@if ($organization->jobsites->count())
-				<p class="panel-tabs">
-					<a class="is-active">all</a>
-					<a>active</a>
-					<a>inactive</a>
-					<a>pending</a>
-				</p>
-				
-				@foreach ($organization->jobsites as $jobsite)
-				<a class="panel-block">
-					<span class="panel-icon">
-						<i class="{{ $jobsite->type == 'residential' ? 'fas fa-map' : 'far fa-building' }}" aria-hidden="true"></i>
-					</span>
-					{{ $jobsite->name }}
-				</a>
-				@endforeach
-				
-				@else
-				<div class="panel-block">
-					<a class="button is-success" href="/jobsites/create">New Jobsite</a>
-				</div>
-				@endif
-				
-			</section>
-		</div> <!-- level-right -->
+		
+			@include ('layouts.panels.organization_jobsites')
+			
+		</div> <!-- column 2 -->
 	</div>
 
 @endsection

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobsite;
 use Illuminate\Http\Request;
 
-class JobsiteController extends Controller
+class JobsitesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class JobsiteController extends Controller
      */
     public function index()
     {
-        //
+		// Todo: make filterable
+        $jobsites = Jobsite::all();
+		return view('jobsites.index', compact('jobsites'));
     }
 
     /**
@@ -24,7 +26,7 @@ class JobsiteController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobsites.create');
     }
 
     /**
@@ -35,7 +37,9 @@ class JobsiteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		Jobsite::create(request()->validate(Jobsite::validated()));
+
+		return redirect('/jobsites');
     }
 
     /**
@@ -46,7 +50,7 @@ class JobsiteController extends Controller
      */
     public function show(Jobsite $jobsite)
     {
-        //
+		return view('jobsites.show', compact('jobsite'));
     }
 
     /**
@@ -57,7 +61,7 @@ class JobsiteController extends Controller
      */
     public function edit(Jobsite $jobsite)
     {
-        //
+		return view('jobsites.edit', compact('jobsite'));
     }
 
     /**
@@ -69,7 +73,9 @@ class JobsiteController extends Controller
      */
     public function update(Request $request, Jobsite $jobsite)
     {
-        //
+		$jobsite->update(request()->validate(Jobsite::validated()));
+		
+		return redirect('/jobsites');
     }
 
     /**
@@ -80,6 +86,8 @@ class JobsiteController extends Controller
      */
     public function destroy(Jobsite $jobsite)
     {
-        //
+		$jobsite->delete();
+
+		return redirect('/jobsites');
     }
 }

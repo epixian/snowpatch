@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top">
+<html>
 <head>
 	<title>@yield('title')</title>
 	<meta charset="utf-8">
@@ -13,7 +13,16 @@
 	</style>
 </head>
 <body>
+
 	@include('layouts.header')
+	
+	@include('layouts.nav')
+	
+	<!-- end top navigation -->
+
+
+
+
 	<section class="section">
 		<div class="container">
 			<nav class="level">
