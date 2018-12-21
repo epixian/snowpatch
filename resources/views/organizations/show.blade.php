@@ -3,7 +3,9 @@
 @section('module_name', 'organizations')
 
 @section('content')
+
 	<h1 class="title">{{ $organization->name }}</h1>
+	
 	<div class="content columns">
 		<div class="column">
 			<div class="section">
