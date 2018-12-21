@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top">
+<html>
 <head>
 	<title>@yield('title')</title>
 	<meta charset="utf-8">

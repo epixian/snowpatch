@@ -10,6 +10,7 @@
 	</div>
 
 	<div id="navbar" class="navbar-menu">
+	
 		<div class="navbar-start">
 			<a class="navbar-item is-active" href="/organizations">Organizations</a>
 			<a class="navbar-item">Contacts</a>
@@ -28,8 +29,8 @@
 				</div>
 			</div>
 <!-- endif -->
-			
-		</div>
+
+		</div> <!-- navbar-start -->
 
 		<div class="navbar-end">
 			<div class="navbar-item has-dropdown is-hoverable">
@@ -42,6 +43,8 @@
 					<a class="navbar-item">Log out</a>
 				</div>
 			</div>
-		</div>
-	</div>
+		</div> <!-- navbar-end -->
+		
+	</div> <!-- navbar-menu -->
+	
 </nav>	
