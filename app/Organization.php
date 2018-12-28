@@ -11,6 +11,10 @@ class Organization extends Model
 	const TYPE_CLIENT = 2;
 	const TYPE_VENDOR = 3;
 	const TYPE_SUBCONTRACTOR = 4;
+
+	const STATUS_UNKNOWN = 0;
+	const STATUS_CURRENT = 1;
+	const STATUS_ARCHIVED = 2;
 	
 	protected static $validate = [
 		'name' => 'required',
@@ -20,7 +24,8 @@ class Organization extends Model
 		'state' => 'required',
 		'postal_code' => 'required',
 		'country' => 'required',
-		'type' => 'nullable|between:0,3'
+		'type' => 'nullable|between:0,4',
+		'status' => 'nullable|between:0,2'
 	];
 	protected $guarded = [];
 	

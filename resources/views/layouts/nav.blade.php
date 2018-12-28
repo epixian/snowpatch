@@ -12,31 +12,16 @@
 	<div id="navbar" class="navbar-menu">
 	
 		<div class="navbar-start">
-			<a class="navbar-item is-active" href="/organizations">Organizations</a>
-			<a class="navbar-item">Contacts</a>
-			<a class="navbar-item">Jobsites</a>
-
-<!-- if($user->isAdmin()) -->
-			<div class="navbar-item has-dropdown is-hoverable">
-				<a class="navbar-link">Admin</a>
-				<div class="navbar-dropdown">
-					<a class="navbar-item">Users</a>
-					<a class="navbar-item">Groups</a>
-	<!-- if($user->isSuperAdmin()) -->
-					<hr class="navbar-divider">
-					<a class="navbar-item">Manage Account</a>
-	<!-- endif -->
-				</div>
-			</div>
-<!-- endif -->
-
+			<a class="navbar-item is-active" href="/dashboard">CRM</a>
+			<a class="navbar-item">Timekeeping</a>
+			<a class="navbar-item">Accounting</a>
 		</div> <!-- navbar-start -->
 
 		<div class="navbar-end">
 			<div class="navbar-item has-dropdown is-hoverable">
-				<a class="navbar-link">User</a>
+				<a class="navbar-item is-48x48"><img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></a>
 
-				<div class="navbar-dropdown">
+				<div class="navbar-dropdown is-right">
 					<a class="navbar-item">Profile</a>
 					<a class="navbar-item">Account</a>
 					<hr class="navbar-divider">

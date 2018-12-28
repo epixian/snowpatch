@@ -11,6 +11,11 @@ class Jobsite extends Model
 	const TYPE_COMMERCIAL = 2;
 	const TYPE_GOVERNMENT = 3;
 	
+	const STATUS_UNKNOWN = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_INACTIVE = 2;
+	const STATUS_PENDING = 3;
+	
 	protected static $validate = [
 		'name' => 'required',
 		'address' => 'required',
@@ -18,7 +23,10 @@ class Jobsite extends Model
 		'state' => 'required',
 		'postal_code' => 'required',
 		'country' => 'required',
-		'type' => 'nullable|between:0,3'
+		'acreage' => 'nullable|gte:0',
+		'linear_feet' => 'nullable|gte:0',
+		'type' => 'nullable|between:0,3',
+		'status' => 'nullable|between:0,3'
 	];
     protected $guarded = [];
 	

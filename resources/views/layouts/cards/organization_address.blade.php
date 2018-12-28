@@ -6,7 +6,7 @@
 				{{ $organization->address_line_2 }}<br>
 			@endif
 			{{ $organization->city }}, {{ $organization->state}} {{ $organization->postal_code}}<br>
-			{{ $organization->country }}
+
 		</p>
 	</div>
 	<footer class="card-footer">

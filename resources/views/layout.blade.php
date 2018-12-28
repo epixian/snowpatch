@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
 <head>
-	<title>@yield('title')</title>
+	<title>
+		Snowpatch CRM - @yield('title')
+	</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
@@ -15,8 +17,6 @@
 <body>
 
 	@include('layouts.header')
-	
-	<!-- include('layouts.sidebar') -->
 	
 	@include('layouts.content')
 
