@@ -6,7 +6,7 @@
 				<td></td>
 				<td>Name</td>
 				<td>Address</td>
-				<td class="has-text-centered">Status</td>
+				<td>Status</td>
 				<td>Organization</td>
 				<td class="has-text-centered">Acres</td>
 				<td class="has-text-centered">LF</td>
@@ -28,13 +28,19 @@
 						@case(3)
 							<i class="fas fa-university"></i>
 							@break
+						@case(4)
+							<i class="far fa-hospital"></i>
+							@break
+						@case(5)
+							<i class="fas fa-place-of-worship"></i>
+							@break
 						@default
 							<i class="far fa-question-circle"></i>
 					@endswitch
 				</td>
 				<td><a href="/jobsites/{{ $jobsite->id }}">{{ $jobsite->name }}</a></td>
 				<td>{{ $jobsite->address }}, {{ $jobsite->city }}, {{ $jobsite->state }} {{ $jobsite->postal_code }}</td>
-				<td class="has-text-centered">
+				<td>
 					@switch($jobsite->status)
 						@case(1)
 							<span class="tag is-success">Active</span>
@@ -57,9 +63,9 @@
 					@endif
 				</td>
 				<td class="has-text-right">
-				@if($jobsite->linear_feet)
-				<span class="tag is-info">{{ $jobsite->linear_feet }}</span>
-				@endif
+					@if($jobsite->linear_feet)
+					<span class="tag is-info">{{ $jobsite->linear_feet }}</span>
+					@endif
 				</td>
 
 			</tr>

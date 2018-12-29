@@ -24,9 +24,10 @@ class JobsitesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('jobsites.create');
+		$organization = \App\Organization::find($request->input('organization'));
+        return view('jobsites.create', compact('organization'));
     }
 
     /**
@@ -39,7 +40,7 @@ class JobsitesController extends Controller
     {
 		Jobsite::create(request()->validate(Jobsite::validated()));
 
-		return redirect('/jobsites');
+		return redirect('/organizations/' . $request->input('organization'));
     }
 
     /**
@@ -75,7 +76,7 @@ class JobsitesController extends Controller
     {
 		$jobsite->update(request()->validate(Jobsite::validated()));
 		
-		return redirect('/jobsites');
+		return redirect('/organizations/' . $request->input('organization'));
     }
 
     /**

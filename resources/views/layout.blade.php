@@ -12,6 +12,9 @@
 		.panel-heading, .panel-tabs {
 			margin-bottom:0 !important;
 		}
+		#map {
+			height: 400px;
+		}
 	</style>
 </head>
 <body>

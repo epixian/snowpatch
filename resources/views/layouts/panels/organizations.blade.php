@@ -15,7 +15,24 @@
 				<td><label class="checkbox" name="organization-{{ $organization->id }}"><input type="checkbox"></label></td>
 				<td><a href="/organizations/{{ $organization->id }}">{{ $organization->name }}</a></td>
 				<td>{{ $organization->city }}, {{ $organization->state }}</td>
-				<td><span class="tag">Type</span></td>
+				<td>
+					@switch($organization->type)
+						@case(1)
+							<span class="tag is-light">Lead</span>
+							@break
+						@case(2)
+							<span class="tag is-success">Client</span>
+							@break
+						@case(3)
+							<span class="tag is-info">Vendor</span>
+							@break
+						@case(4)
+							<span class="tag is-warning">Subcontractor</span>
+							@break
+						@default
+							<span class="tag is-black">Unknown</span>
+					@endswitch
+				</td>
 			</tr>
 			@endforeach
 		</tbody>

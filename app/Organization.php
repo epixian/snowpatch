@@ -44,5 +44,14 @@ class Organization extends Model
 		return self::$validate;
 	}
 	
+	public function addJobsite($jobsite)
+	{
+		$this->jobsites()->create(compact('jobsite'));
+	}
+	
+	public function addContact($contact)
+	{
+		$this->contacts()->create(compact('contact'));
+	}
 }
 

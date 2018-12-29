@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('module_name', 'organizations')
+@section('module_name', 'jobsites')
 
 @section('title')
-	{{ $organization->name }}
+	{{ $jobsite->name }}
 @endsection
 
 @section('content')
@@ -11,30 +11,28 @@
 <div class="content columns is-multiline">
 
 	<div class="column is-full">
-		<h1 class="title">{{ $organization->name }}</h1>
+		<h2 class="title is-4">{{ $jobsite->name }}</h2>
+		<h3 class="subtitle is-6"><a href="/organizations/{{ $jobsite->organization->id }}">{{ $jobsite->organization->name }}</a></h3>
 	</div>
 	
-	<div class="column is-half">
-
-		@include('layouts.cards.organization_address')
+	<div class="column is-one-third is-full-mobile">
+	
+		<p class="title is-5">Jobsite</p>
+	
+		@include('layouts.cards.jobsite_info')
 		
-	</div> <!-- column 1 -->
-
-	<div class="column is-half">
-
-		@include ('layouts.panels.organization_jobsites')
-
-	</div> <!-- column 2 -->
+		<p class="title is-5">Services</p>
 	
-	@if ($organization->contacts->count())
-	<div class="column is-half">
-		<p class="title is-5">Organization Contacts</p>
-	
-		@foreach ($organization->contacts as $contact)
-			@include('layouts.cards.contact_info')
-		@endforeach
+		@include('layouts.cards.services')
+
 	</div>
-	@endif
+
+	<div class="column is-two-thirds is-full-mobile">
+		<p class="title is-5">Map</p>
+	
+		@include('layouts.cards.map')
+
+	</div>
 	
 </div>
 

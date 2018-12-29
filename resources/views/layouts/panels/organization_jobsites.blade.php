@@ -11,18 +11,36 @@
 	</p>
 	
 	@foreach ($organization->jobsites as $jobsite)
-	<a class="panel-block">
+	<a class="panel-block" href="/jobsites/{{ $jobsite->id }}">
 		<span class="panel-icon">
-			<i class="{{ $jobsite->type == 'residential' ? 'fas fa-map' : 'far fa-building' }}" aria-hidden="true"></i>
+		@switch($jobsite->type)
+			@case(1)
+				<i class="fas fa-home"></i>
+				@break
+			@case(2)
+				<i class="far fa-building"></i>
+				@break
+			@case(3)
+				<i class="fas fa-university"></i>
+				@break
+			@case(4)
+				<i class="far fa-hospital"></i>
+				@break
+			@case(5)
+				<i class="fas fa-place-of-worship"></i>
+				@break
+			@default
+				<i class="far fa-question-circle"></i>
+		@endswitch
 		</span>
 		{{ $jobsite->name }}
 	</a>
 	@endforeach
 	
-	@else
-	<div class="panel-block">
-		<a class="button is-success" href="/jobsites/create">New Jobsite</a>
-	</div>
 	@endif
+	
+	<div class="panel-block">
+		<a class="button is-success" href="/jobsites/create?organization={{ $organization->id }}">New Jobsite</a>
+	</div>
 	
 </section>

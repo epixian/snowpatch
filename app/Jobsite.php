@@ -10,6 +10,8 @@ class Jobsite extends Model
 	const TYPE_RESIDENTIAL = 1;
 	const TYPE_COMMERCIAL = 2;
 	const TYPE_GOVERNMENT = 3;
+	const TYPE_MEDICAL = 4;
+	const TYPE_RELIGIOUS = 5;
 	
 	const STATUS_UNKNOWN = 0;
 	const STATUS_ACTIVE = 1;
@@ -25,8 +27,9 @@ class Jobsite extends Model
 		'country' => 'required',
 		'acreage' => 'nullable|gte:0',
 		'linear_feet' => 'nullable|gte:0',
-		'type' => 'nullable|between:0,3',
-		'status' => 'nullable|between:0,3'
+		'type' => 'nullable|between:0,5',
+		'status' => 'nullable|between:0,3',
+		'organization_id' => 'required'
 	];
     protected $guarded = [];
 	
@@ -38,6 +41,11 @@ class Jobsite extends Model
 	public function map()
 	{
 		return $this->hasOne(Map::class);
+	}
+	
+	public static function validated()
+	{
+		return self::$validate;
 	}
 
 }

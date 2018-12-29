@@ -11,7 +11,7 @@
 <div class="content columns is-multiline">
 
 	<div class="column is-full">
-		<h1 class="title">{{ $organization->name }}</h1>
+		<h2 class="title is-4">{{ $organization->name }}</h1>
 	</div>
 	
 	<div class="column is-half">
