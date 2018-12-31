@@ -15,6 +15,9 @@
 		#map {
 			height: 400px;
 		}
+		.jobsite-header h2 {
+			display:inline-block;
+		}
 	</style>
 </head>
 <body>
