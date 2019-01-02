@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Jobsite extends Model
 {
+	use Sortable;
+	
 	const TYPE_UNKNOWN = 0;
 	const TYPE_RESIDENTIAL = 1;
 	const TYPE_COMMERCIAL = 2;
@@ -32,6 +35,20 @@ class Jobsite extends Model
 		'organization_id' => 'required'
 	];
     protected $guarded = [];
+	
+	public $sortable = [
+		'name',
+		'address',
+		'city',
+		'state',
+		'postal_code',
+		'country',
+		'acreage',
+		'linear_feet',
+		'type',
+		'status',
+		'organization_id'
+	];
 	
 	public function organization()
 	{
