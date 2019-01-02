@@ -21,6 +21,11 @@ class Jobsite extends Model
 	const STATUS_INACTIVE = 2;
 	const STATUS_PENDING = 3;
 	
+	/**
+	 * Validation schema for class attributes
+	 * 
+	 * @var array
+	 */
 	protected static $validate = [
 		'name' => 'required',
 		'address' => 'required',
@@ -34,8 +39,19 @@ class Jobsite extends Model
 		'status' => 'nullable|between:0,3',
 		'organization_id' => 'required'
 	];
+	
+	/**
+	 * Attributes that are not mass assignable
+	 * 
+	 * @var array
+	 */
     protected $guarded = [];
 	
+	/**
+	 * Attributes that can be sorted
+	 * 
+	 * @var array
+	 */
 	public $sortable = [
 		'name',
 		'address',
@@ -66,6 +82,9 @@ class Jobsite extends Model
 		return $this->hasOne(Map::class);
 	}
 
+    /**
+     * @return array|null
+     */
 	public static function validated()
 	{
 		return self::$validate;
