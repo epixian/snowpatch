@@ -56,7 +56,7 @@
 					@endswitch
 
 				</td>
-				<td>{{ $jobsite->organization->name }}</td>
+				<td><a href="/organizations/{{ $jobsite->organization->id }}">{{ $jobsite->organization->name }}</a></td>
 				<td class="has-text-right">
 					@if($jobsite->acreage)
 					<span class="tag is-warning">{{ $jobsite->acreage }}</span>

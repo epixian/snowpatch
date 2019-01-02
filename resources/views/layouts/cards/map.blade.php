@@ -54,7 +54,7 @@ function initMap() {
 }
 		</script>
 
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmWDiERR6qBULC6C9QcmllcbSjUlOhUZA&callback=initMap"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&callback=initMap"></script>
 		
 	</div> <!-- card content -->
 

@@ -2,9 +2,7 @@
 
 @section('module_name', 'organizations')
 
-@section('title')
-	{{ $organization->name }}
-@endsection
+@section('title', '{{ $organization->name }}')
 
 @section('content')
 
