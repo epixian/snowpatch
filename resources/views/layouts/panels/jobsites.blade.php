@@ -4,8 +4,8 @@
 			<tr>
 				<td><label class="checkbox"><input type="checkbox"></label></td>
 				<td></td>
-				<td>Name</td>
-				<td>Address</td>
+				<td> @sortablelink('name', 'Name') </td>
+				<td> @sortablelink('address', 'Address') </td>
 				<td>Status</td>
 				<td>Organization</td>
 				<td class="has-text-centered">Acres</td>

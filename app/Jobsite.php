@@ -49,17 +49,23 @@ class Jobsite extends Model
 		'status',
 		'organization_id'
 	];
-	
+
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
 	public function organization()
 	{
 		return $this->belongsTo(Organization::class);
 	}
-
+	
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
 	public function map()
 	{
 		return $this->hasOne(Map::class);
 	}
-	
+
 	public static function validated()
 	{
 		return self::$validate;
