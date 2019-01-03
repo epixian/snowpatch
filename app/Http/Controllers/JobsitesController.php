@@ -10,14 +10,14 @@ class JobsitesController extends Controller
     /**
      * Display a listing of Jobsites.
      *
-     * @return \Illuminate\Http\Response|\Kyslik\ColumnSortable\Exceptions\ColumnSortableException
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
 		// Todo: make filterable
 		try {
 			
-			$jobsites = Jobsite::all()->sortable('name');
+			$jobsites = Jobsite::sortable()->paginate(5);
 			return view('jobsites.index', compact('jobsites'));
 			
 		} catch (\Kyslik\ColumnSortable\Exceptions\ColumnSortableException $e) {

@@ -46,7 +46,7 @@
 	</div>
 	
 	<div class="level-right">
-		<a class="button is-primary is-outlined" href="/jobsites/create">New</a>
+		{!! $jobsites->appends(\Request::except('page'))->links('vendor.pagination.bulma') !!}
 	</div>
 	
 </div> <!-- level -->

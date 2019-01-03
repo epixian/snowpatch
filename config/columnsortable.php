@@ -8,10 +8,10 @@ return [
     'columns' => [
         'alpha' => [
             'rows'  => [ 
-				'description', 
-				'email',
 				'name', 
-				'slug', 
+				'address_line_1',
+				'address_line_2',
+				'address',
 				'city', 
 				'state', 
 				'postal_code', 

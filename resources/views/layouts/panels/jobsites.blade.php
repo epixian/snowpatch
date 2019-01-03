@@ -73,3 +73,11 @@
 		</tbody>
 	</table>
 </div>
+
+<div class="level">
+	<div class="level-left">
+	</div>
+	<div class="level-right">
+{!! $jobsites->appends(\Request::except('page'))->links('vendor.pagination.bulma') !!}
+	</div>
+</div>
