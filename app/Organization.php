@@ -81,16 +81,25 @@ class Organization extends Model
 		return self::$validate;
 	}
 	
+	/**
+	 * @param \App\Jobsite
+	 */
 	public function addJobsite($jobsite)
 	{
 		$this->jobsites()->create(compact('jobsite'));
 	}
 	
+	/**
+	 * @param \App\Contact
+	 */
 	public function addContact($contact)
 	{
 		$this->contacts()->create(compact('contact'));
 	}
 	
+	/**
+	 * @param \App\Contact
+	 */
 	public function setPrimaryContact($contact)
 	{
 		$this->primary_contact_id = $contact->id;
