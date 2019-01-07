@@ -17,7 +17,7 @@ class JobsitesController extends Controller
 		// Todo: make filterable
 		try {
 			
-			$jobsites = Jobsite::sortable()->paginate(5);
+			$jobsites = Jobsite::sortable('name')->paginate(10);
 			return view('jobsites.index', compact('jobsites'));
 			
 		} catch (\Kyslik\ColumnSortable\Exceptions\ColumnSortableException $e) {
