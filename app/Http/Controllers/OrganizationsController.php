@@ -16,8 +16,16 @@ class OrganizationsController extends Controller
 	public function index() 
 	{
 		// Todo: make filterable
-		$organizations = Organization::all();
-		return view('organizations.index', compact('organizations'));
+        try {
+            
+            $organizations = Organization::sortable('name')->paginate(10);
+            return view('organizations.index', compact('organizations'));
+            
+        } catch (\Kyslik\ColumnSortable\Exceptions\ColumnSortableException $e) {
+            
+            dd($e);
+            
+        }
 	}
 	
     /**

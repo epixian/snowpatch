@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<td><label class="checkbox"><input type="checkbox"></label></td>
-				<td>Name</td>
+				<td> @sortablelink('name', 'Name') </td>
 				<td>Location</td>
 				<td>Type</td>
 			</tr>
