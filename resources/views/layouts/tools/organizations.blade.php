@@ -1,6 +1,11 @@
 <div class="level">
 
 	<div class="level-left">
+		
+		<div class="level-item">
+			<a class="button is-primary" href="/organizations/create">New</a>
+		</div>
+	
 		<div class="control has-icons-left level-item">
 			<input class="input" type="text" placeholder="Search organizations">
 			<span class="icon is-left"><i class="fas fa-search" aria-hidden="true"></i></span>
@@ -47,7 +52,7 @@
 	</div>
 	
 	<div class="level-right">
-		<a class="button is-primary" href="/organizations/create">New</a>
+		{!! $organizations->appends(\Request::except('page'))->links('vendor.pagination.bulma') !!}
 	</div>
 	
 </div> <!-- level -->
