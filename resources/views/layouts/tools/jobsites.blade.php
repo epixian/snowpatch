@@ -1,6 +1,7 @@
 <div class="level">
 
 	<div class="level-left">
+		
 		<div class="control has-icons-left level-item">
 			<input class="input" type="text" placeholder="Search organizations">
 			<span class="icon is-left"><i class="fas fa-search" aria-hidden="true"></i></span>
