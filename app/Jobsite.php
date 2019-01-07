@@ -24,7 +24,7 @@ class Jobsite extends Model
 	/**
 	 * Validation schema for class attributes
 	 * 
-	 * @var array
+	 * @static array
 	 */
 	protected static $validate = [
 		'name' => 'required',
@@ -67,7 +67,7 @@ class Jobsite extends Model
 	];
 
 	/**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 	public function organization()
 	{

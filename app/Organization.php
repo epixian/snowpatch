@@ -22,7 +22,7 @@ class Organization extends Model
 	/**
 	 * Validation schema for class attributes
 	 * 
-	 * @var array
+	 * @static array
 	 */
 	protected static $validate = [
 		'name' => 'required',
