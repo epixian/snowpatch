@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Organization extends Model
 {
+	use Sortable;
+
 	const TYPE_UNKNOWN = 0;
 	const TYPE_LEAD = 1;
 	const TYPE_CLIENT = 2;
@@ -16,6 +19,11 @@ class Organization extends Model
 	const STATUS_CURRENT = 1;
 	const STATUS_ARCHIVED = 2;
 	
+	/**
+	 * Validation schema for class attributes
+	 * 
+	 * @var array
+	 */
 	protected static $validate = [
 		'name' => 'required',
 		'address_line_1' => 'required',
@@ -25,20 +33,49 @@ class Organization extends Model
 		'postal_code' => 'required',
 		'country' => 'required',
 		'type' => 'nullable|between:0,4',
-		'status' => 'nullable|between:0,2'
+		'status' => 'nullable|between:0,2',
+		'primary_contact_id' => 'nullable'
 	];
+
+	/**
+	 * Attributes that are not mass assignable
+	 * 
+	 * @var array
+	 */
 	protected $guarded = [];
+
+	/**
+	 * Attributes that can be sorted
+	 * 
+	 * @var array
+	 */
+	public $sortable = [
+		'name',
+		'location',
+		'type',
+		'status'
+	];
 	
+	
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
 	public function jobsites() 
 	{
 		return $this->hasMany(Jobsite::class);
 	}
 	
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
 	public function contacts()
 	{
 		return $this->hasMany(Contact::class);
 	}
 	
+    /**
+     * @return array|null
+     */
 	public static function validated()
 	{
 		return self::$validate;
@@ -52,6 +89,11 @@ class Organization extends Model
 	public function addContact($contact)
 	{
 		$this->contacts()->create(compact('contact'));
+	}
+	
+	public function setPrimaryContact($contact)
+	{
+		$this->primary_contact_id = $contact->id;
 	}
 }
 
