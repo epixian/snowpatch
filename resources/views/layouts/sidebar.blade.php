@@ -2,21 +2,21 @@
 
 	<p class="menu-label">Modules</p>
 	<ul class="menu-list">
-		<li><a href="/organizations" class="{{ isset($organizations) || isset($organization) ? 'is-active' : '' }}">Organizations</a></li>
-		<li><a class="{{ isset($contacts) || isset($contact) ? 'is-active' : '' }}">Contacts</a></li>
-		<li><a href="/jobsites" class="{{ isset($jobsites) || isset($jobsite) ? 'is-active' : '' }}">Jobsites</a></li>
+		<li><a href="/organizations" @if($module_name == 'organizations') class="is-active" @endif >Organizations</a></li>
+		<li><a href="#" @if($module_name == 'contacts') class="is-active" @endif >Contacts</a></li>
+		<li><a href="/jobsites" @if($module_name == 'jobsites') class="is-active" @endif ">Jobsites</a></li>
 	</ul>
 	
 	<p class="menu-label">Admin</p>
 	<ul class="menu-list">
-		<li><a{{ isset($users) || isset($user) ? ' class=is-active' : '' }}>Users</a></li>
-		<li><a{{ isset($groups) || isset($group) ? ' class=is-active' : '' }}>Groups</a></li>
-		<li><a{{ isset($account) ? ' class=is-active' : '' }}>Account</a></li>
+		<li><a href="#" @if($module_name == 'users') class="is-active" @endif >Users</a></li>
+		<li><a href="#" @if($module_name == 'groups') class="is-active" @endif >Groups</a></li>
+		<li><a href="#" @if($module_name == 'account') class="is-active" @endif >Account</a></li>
 	</ul>
 	
 	<hr class="menu-label">
 	<ul class="menu-list">
-		<li><a>Log out</a></li>
+		<li><a href="#">Log out</a></li>
 	</ul>
 
 </aside>

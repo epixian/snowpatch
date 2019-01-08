@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('module_name')
-organizations
-@endsection
+@php
+	$module_name = 'organizations';
+@endphp
 
 @section('content')
 	<h1 class="title">Edit Organization</h1>

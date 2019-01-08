@@ -1,6 +1,8 @@
 @extends('layout')
 
-@section('module_name', 'jobsites')
+@php
+	$module_name = 'jobsites';
+@endphp
 
 @section('title')
 	{{ $jobsite->name }}
