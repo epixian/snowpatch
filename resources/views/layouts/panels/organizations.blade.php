@@ -6,6 +6,7 @@
 				<td> @sortablelink('name', 'Name') </td>
 				<td>Location</td>
 				<td>Type</td>
+				<td>Contact</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,6 +33,11 @@
 						@default
 							<span class="tag is-black">Unknown</span>
 					@endswitch
+				</td>
+				<td>
+					@if ($organization->hasPrimaryContact())
+						<a href="/contacts/{{ $organization->getPrimaryContact()->id }}">{{ $organization->getPrimaryContact()->fname }} {{ $organization->getPrimaryContact()->lname }}</a>
+					@endif
 				</td>
 			</tr>
 			@endforeach
