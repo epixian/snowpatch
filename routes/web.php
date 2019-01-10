@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::resource('/organizations', 'OrganizationsController');
 
 Route::resource('/jobsites', 'JobsitesController');
+
+Route::post('/organizations/{organization}/contact', 'OrganizationContactsController@store');
+Route::patch('/organizations/{organization}/contact', 'OrganizationContactsController@update');
