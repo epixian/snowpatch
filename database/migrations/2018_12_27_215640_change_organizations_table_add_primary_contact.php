@@ -14,7 +14,7 @@ class ChangeOrganizationsTableAddPrimaryContact extends Migration
     public function up()
     {
         Schema::table('organizations', function (Blueprint $table) {
-            $table->unsignedInteger('contact_id')->nullable();
+            $table->unsignedInteger('primary_contact_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class ChangeOrganizationsTableAddPrimaryContact extends Migration
     public function down()
     {
         Schema::table('organizations', function (Blueprint $table) {
-            $table->dropColumn('contact_id');
+            $table->dropColumn('primary_contact_id');
         });
     }
 }
