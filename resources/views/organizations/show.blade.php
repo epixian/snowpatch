@@ -11,30 +11,32 @@
 <div class="content columns is-multiline">
 
 	<div class="column is-full">
-		<h2 class="title is-4">{{ $organization->name }}</h1>
+		<div class="columns">
+			<div class="column is-narrow">
+				<h2 class="title is-4">{{ $organization->name }}</h2>
+				<h3 class="subtitle is-6">{{ $organization->address_line_1 }}, {{ $organization->city }}, {{ $organization->state }} {{ $organization->postal_code }} {{ $organization->country }}</a></h3>
+			</div>
+			<div class="column">
+				{{-- tags, extras? --}}
+			</div>
+		</div>		
 	</div>
 	
-	<div class="column is-half">
-
-		@include('layouts.cards.organization_address')
-		
-	</div> <!-- column 1 -->
-
-	<div class="column is-half">
+	<div class="column is-one-third is-full-mobile">
 
 		@include ('layouts.panels.organization_jobsites')
 
+	</div> <!-- column 1 -->
+
+	<div class="column is-two-thirds is-full-mobile">
+
+		@include('layouts.panels.organization_contacts')
+
 	</div> <!-- column 2 -->
-	
-	@if ($organization->contacts->count())
-	<div class="column is-half">
-		<p class="title is-5">Organization Contacts</p>
-	
-		@foreach ($organization->contacts as $contact)
-			@include('layouts.cards.contact_info')
-		@endforeach
+
+	<div class="column is-full">
+
 	</div>
-	@endif
 	
 </div>
 
