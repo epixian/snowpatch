@@ -31,6 +31,13 @@ class Contact extends Model
 	 */
     protected $guarded = [];
 
+    /**
+     * All of the relationships to be touched when changes occur.
+     *
+     * @var array
+     */
+    protected $touches = ['organization'];
+
 	/**
 	 * Attributes that can be sorted
 	 * 
@@ -60,6 +67,11 @@ class Contact extends Model
 	public function isPrimaryContact()
 	{
 		return ($this->organization->primary_contact_id == $this->id);
+	}
+
+	public function isNotPrimaryContact()
+	{
+		return !$this->isPrimaryContact();
 	}
 
     /**
