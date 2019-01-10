@@ -47,6 +47,13 @@ class Jobsite extends Model
 	 */
     protected $guarded = [];
 	
+    /**
+     * All of the relationships to be touched when changes occur.
+     *
+     * @var array
+     */
+    protected $touches = ['organization'];
+
 	/**
 	 * Attributes that can be sorted
 	 * 
