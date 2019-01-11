@@ -16,37 +16,37 @@
 			@if ($organization->hasPrimaryContact())
 			<tr>
 				<td>
-					<a href="/contacts/{{ $organization->getPrimaryContact()->id }}">{{ $organization->getPrimaryContact()->fname }} {{ $organization->getPrimaryContact()->lname }}</a>
+					<a href="/contacts/{{ $organization->primaryContact->id }}">{{ $organization->primaryContact->fname }} {{ $organization->primaryContact->lname }}</a>
 					<span class="tag is-info">Primary</span>
 				</td>
-				<td>{{ $organization->getPrimaryContact()->title }}</td>
+				<td>{{ $organization->primaryContact->title }}</td>
 				<td>
-					@isset($organization->getPrimaryContact()->work_phone)
-						{{ $organization->getPrimaryContact()->work_phone }}
+					@isset($organization->primaryContact->work_phone)
+						{{ $organization->primaryContact->work_phone }}
 						<span class="tag is-link">work</span>
 					@endisset
 
-					@if( isset($organization->getPrimaryContact()->work_phone) && 
-						isset($organization->getPrimaryContact()->mobile_phone) )
+					@if( isset($organization->primaryContact->work_phone) && 
+						isset($organization->primaryContact->mobile_phone) )
 						<br>
 					@endif
 						
-					@isset($organization->getPrimaryContact()->mobile_phone)
-						{{ $organization->getPrimaryContact()->mobile_phone }}
+					@isset($organization->primaryContact->mobile_phone)
+						{{ $organization->primaryContact->mobile_phone }}
 						<span class="tag is-info">cell</span>
 					@endisset
 				</td>
 				<td>
-					@isset($organization->getPrimaryContact()->email_1)
-						{{ $organization->getPrimaryContact()->email_1 }}
+					@isset($organization->primaryContact->email_1)
+						{{ $organization->primaryContact->email_1 }}
 					@endisset
 
-					@if( isset($organization->getPrimaryContact()->email_1) && isset($organization->getPrimaryContact()->email_2) )
+					@if( isset($organization->primaryContact->email_1) && isset($organization->primaryContact->email_2) )
 						<br>
 					@endif
 
-					@isset($organization->getPrimaryContact()->email_2)
-						{{ $organization->getPrimaryContact()->email_2 }}
+					@isset($organization->primaryContact->email_2)
+						{{ $organization->primaryContact->email_2 }}
 					@endisset
 				</td>
 			</tr>
