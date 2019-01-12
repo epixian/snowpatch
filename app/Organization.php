@@ -124,22 +124,45 @@ class Organization extends Model
 	 */
 	public function deleteContact(Contact $contact)
 	{
-		// dd($attributes, $setPrimaryContact);
-		dd($contact->belongsTo());
-		if ($contact->isPrimaryContact()) 
+		// Contact belongs to this organization
+		if($contact->organization->is($this)) 
 		{
-			if ($this->contacts->count() == 1) {
-				$this->primary_contact_id = null;
-				$this->contacts->find($contact->id)->delete();
-			}
-			else
+			// if primary contact, we need to assign new primary after deletion
+			$isPrimary = $contact->isPrimaryContact();
+
+			// delete the contact and reload relationships
+			$this->contacts->find($contact->id)->delete();
+			$this->refresh();
+
+			// additional steps if deleting a primary contact
+			if ($isPrimary)
 			{
-				$this->contacts;
+				// if no more contacts, reset the primary contact id for this org
+				if ($this->contacts->count() == 0)
+				{
+					$this->primary_contact_id = null;
+				}
+				// otherwise assign new primary contact
+				else
+				{
+					$this->setPrimaryContact($this->contacts->first());
+				}
 			}
 		}
-		$contact = $this->contacts()->find($contact->id);
+		// Contact does not belong to the Organization
+		else
+		{
+			dd('Error: Contact ' . $contact->fname . ' ' . $contact->lname . ' #' . $contact->id . ' does not belong to Organization ' . $this->name . ' #' . $this->id);
+		}
 
-		$this->save();
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function primaryContact()
+	{
+		return $this->hasOne(Contact::class, 'id', 'primary_contact_id');
 	}
 
 	/**
@@ -147,7 +170,19 @@ class Organization extends Model
 	 */
 	public function setPrimaryContact($contact)
 	{
-		$this->primary_contact_id = $contact->id;
+		// dd($contact->organization == $this);
+		// make sure $contact belongs to this Organization
+		if($this->contacts->find($contact->id))
+		{
+			$this->primary_contact_id = $contact->id;
+			$this->save();
+			$this->refresh();
+		}
+		else
+		{
+			dd('Error: Contact ' . $contact->fname . ' ' . $contact->lname . ' #' . $contact->id . ' does not belong to Organization ' . $this->name . ' #' . $this->id);
+		}
+		return $this->primaryContact;
 	}
 
 	/**
@@ -155,15 +190,8 @@ class Organization extends Model
 	 */
 	public function hasPrimaryContact()
 	{
-		return $this->primary_contact_id != null;
+		return $this->primaryContact != null;
 	}
 
-	/**
-	 * @return \App\Contact Retrieves primary contact as set by setPrimaryContact.  Assumes hasPrimaryContact = true.
-	 */
-	public function getPrimaryContact()
-	{
-		return $this->contacts->find($this->primary_contact_id);
-	}
 }
 
