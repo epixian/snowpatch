@@ -36,7 +36,7 @@
 				</td>
 				<td>
 					@if ($organization->hasPrimaryContact())
-						<a href="/contacts/{{ $organization->getPrimaryContact()->id }}">{{ $organization->getPrimaryContact()->fname }} {{ $organization->getPrimaryContact()->lname }}</a>
+						<a href="/contacts/{{ $organization->primaryContact->id }}">{{ $organization->primaryContact->fname }} {{ $organization->primaryContact->lname }}</a>
 					@endif
 				</td>
 			</tr>
