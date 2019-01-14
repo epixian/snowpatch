@@ -127,27 +127,24 @@ class Organization extends Model
 		// Contact belongs to this organization
 		if($contact->organization->is($this)) 
 		{
-			// if primary contact, we need to assign new primary after deletion
-			$isPrimary = $contact->isPrimaryContact();
-
-			// delete the contact and reload relationships
-			$this->contacts->find($contact->id)->delete();
-			$this->refresh();
-
-			// additional steps if deleting a primary contact
-			if ($isPrimary)
+			// if deleting primary contact
+			if($contact->isPrimaryContact())
 			{
-				// if no more contacts, reset the primary contact id for this org
-				if ($this->contacts->count() == 0)
+				// if the only contact in the organization, clear primary_contact_id
+				if ($this->contacts->count() == 1)
 				{
 					$this->primary_contact_id = null;
 				}
 				// otherwise assign new primary contact
 				else
 				{
-					$this->setPrimaryContact($this->contacts->first());
+					$this->setPrimaryContact($this->contacts->where('id', '!=', $contact->id)->first());
 				}
 			}
+
+			// delete the contact and reload relationships
+			$this->contacts->find($contact->id)->delete();
+			$this->refresh();
 		}
 		// Contact does not belong to the Organization
 		else
