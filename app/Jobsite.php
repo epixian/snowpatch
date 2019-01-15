@@ -37,7 +37,9 @@ class Jobsite extends Model
 		'linear_feet' => 'nullable|gte:0',
 		'type' => 'nullable|between:0,5',
 		'status' => 'nullable|between:0,3',
-		'organization_id' => 'required'
+		'organization_id' => 'required',
+		'lat' => 'nullable|numeric|between:-90,90',
+		'long' => 'nullable|numeric|between:-180,180'
 	];
 	
 	/**
@@ -82,7 +84,7 @@ class Jobsite extends Model
 	}
 	
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 	public function map()
 	{
