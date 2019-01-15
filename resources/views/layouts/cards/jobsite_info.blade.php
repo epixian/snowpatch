@@ -1,5 +1,5 @@
 <div class="content card">
-	<div class="card-content">
+	<div class="card-content tags">
 		@if($jobsite->acreage)
 		<span class="tag is-warning">{{ $jobsite->acreage }} acres</span>
 		@endif
