@@ -18,7 +18,7 @@
 				<h2 class="title is-4">{{ $jobsite->name }}</h2>
 				<h3 class="subtitle is-6"><a href="/organizations/{{ $jobsite->organization->id }}">{{ $jobsite->organization->name }}</a></h3>
 			</div>
-			<div class="column">
+			<div class="column tags">
 				@if($jobsite->acreage)
 				<span class="tag is-warning">{{ $jobsite->acreage }} acres</span>
 				@endif
