@@ -21,3 +21,5 @@ Route::resource('/jobsites', 'JobsitesController');
 
 Route::post('/organizations/{organization}/contact', 'OrganizationContactsController@store');
 Route::patch('/organizations/{organization}/contact', 'OrganizationContactsController@update');
+
+Route::get('/jobsites/{jobsite}/map', 'JobsiteMapsController@show');
