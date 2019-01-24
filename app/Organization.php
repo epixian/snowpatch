@@ -56,7 +56,6 @@ class Organization extends Model
 		'status'
 	];
 	
-	
 	/**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -74,9 +73,9 @@ class Organization extends Model
 	}
 	
 	/**
-	 * @param \App\Jobsite
+	 * @param \App\Jobsite The Jobsite to add
 	 */
-	public function addJobsite($jobsite)
+	public function addJobsite(Jobsite $jobsite)
 	{
 		$this->jobsites()->create(compact('jobsite'));
 	}
@@ -99,7 +98,7 @@ class Organization extends Model
 		$contact = $this->contacts()->create($attributes);
 		if ($setPrimaryContact || $this->contacts->count() == 1) 
 		{
-			$this->primary_contact_id = $contact->id;
+			$this->setPrimaryContact($contact);
 		}
 		$this->save();
 	}
@@ -114,7 +113,7 @@ class Organization extends Model
 		$contact = $this->contacts()->update($attributes);
 		if ($setPrimaryContact || $this->contacts->count() == 1) 
 		{
-			$this->primary_contact_id = $contact->id;
+			$this->setPrimaryContact($contact);
 		}
 		$this->save();
 	}
@@ -164,6 +163,7 @@ class Organization extends Model
 
 	/**
 	 * @param \App\Contact
+	 * @return \App\Contact The new primary contact
 	 */
 	public function setPrimaryContact($contact)
 	{
