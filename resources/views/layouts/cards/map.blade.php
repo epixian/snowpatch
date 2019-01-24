@@ -5,7 +5,6 @@
 var geocoder;
 var map;
 
-//var address = "529 E Mt. Pleasant Ave, Philadelphia, PA 19119";
 var address = "{{ $jobsite->address }}, {{ $jobsite->city }}, {{ $jobsite->state }} {{ $jobsite->postal_code }}";
 
 function initMap() {
@@ -14,7 +13,11 @@ function initMap() {
 	
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 18,
-		center: new google.maps.LatLng(40, -75.1),
+		// center: {lat: 40, lng: -75.1},
+		center: {
+			lat: {{ $jobsite->map->center->lat }}, 
+			lng: {{ $jobsite->map->center->lng }}
+		}
 		mapTypeId: 'satellite',
 		navigationControl: true,
 		mapTypeControl: false,
