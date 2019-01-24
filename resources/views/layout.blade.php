@@ -13,7 +13,7 @@
 			margin-bottom:0 !important;
 		}
 		#map {
-			height: 400px;
+			height: 500px;
 		}
 		.jobsite-header h2 {
 			display:inline-block;
