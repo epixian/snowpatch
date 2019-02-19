@@ -111,13 +111,13 @@ class MapFeature extends Model
         }
 
         // set new map center
-        $result = DB::table('map_features')
-            ->selectRaw('ST_AsGeoJSON(ST_Envelope(ST_GeomFromGeoJSON(\'' . json_encode($json) . '\'))) as bounds')
-            ->limit(1)
-            ->get();
-        $mbr = json_decode($result[0]->bounds)->coordinates[0];
         if ($updateCenter) 
         {
+            $result = DB::table('map_features')
+                ->selectRaw('ST_AsGeoJSON(ST_Envelope(ST_GeomFromGeoJSON(\'' . json_encode($json) . '\'))) as bounds')
+                ->limit(1)
+                ->get();
+            $mbr = json_decode($result[0]->bounds)->coordinates[0];
             $map->setCenter([
                 'lat' => ($mbr[2][1] + $mbr[0][1]) / 2,
                 'lng' => ($mbr[2][0] + $mbr[0][0]) / 2
