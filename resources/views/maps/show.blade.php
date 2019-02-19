@@ -32,7 +32,7 @@
 	<div class="column">
 		<p class="title is-5">Map</p>
 	
-		@include('layouts.maps.editable')
+		@include('layouts.maps.readonly')
 
 	</div>
 	
