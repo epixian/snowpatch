@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	
-	<div class="column is-half is-full-mobile">
+	<div class="column is-one-third is-full-mobile">
 	
 		<p class="title is-5">Services</p>
 	
@@ -37,10 +37,21 @@
 
 	</div>
 
-	<div class="column is-half is-full-mobile">
-		<p class="title is-5">Map</p>
-	
-		@include('layouts.cards.map')
+	<div class="column is-two-thirds is-full-mobile">
+		<p class="title is-5">
+			Map
+			<span class="is-size-6 is-uppercase has-text-weight-normal"><a href="/jobsites/{{ $jobsite->id }}/map/edit">Edit</a></span>
+		</p>
+		@if($jobsite->map)
+			@php
+			$map = $jobsite->map;
+			@endphp
+			@include('layouts.maps.readonly')
+		@else
+			<div class="content">
+				Create a map
+			</div>
+		@endif
 
 	</div>
 	
