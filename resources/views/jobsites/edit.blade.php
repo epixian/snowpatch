@@ -15,7 +15,8 @@
 				@endforeach
 			</ul>
 		</div>
-		@endif		@method('PATCH')
+		@endif		
+		@method('PATCH')
 		@csrf
 		<div class="field">
 			<label class="label" for="name">Name</label>
