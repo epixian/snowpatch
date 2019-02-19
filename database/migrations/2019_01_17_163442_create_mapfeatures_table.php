@@ -13,11 +13,11 @@ class CreateMapfeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mapfeatures', function (Blueprint $table) {
+        Schema::create('map_features', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('map_id');
-            $table->geometrycollection('geometry');
-            $table->string('type');
+            $table->geometry('geometry');
+            $table->string('description');               // what the geometry object(s) are used to denote
             $table->timestamps();
         });
     }
