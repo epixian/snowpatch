@@ -1,268 +1,305 @@
 <div id="map"></div>
 <script>
-  var map;
-  var stats = {
-    points: 0,
-    lines: 0,
-    length: 0,
-    polygons: 0,
-    area: 0
-  };
-  var data = {
-    type: "FeatureCollection",
-    features: []
-  };
-
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: { 
-        lat: {{ $map->center->lat }}, 
-        lng: {{ $map->center->lng }}
+@if ($map->hasFeatures()) 
+var imported = {!! $map->featuresAsGeoJson() !!};
+@else 
+var imported = {
+  type: "FeatureCollection",
+  features: [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          {{ $map->getCenter()->lat }}, 
+          {{ $map->getCenter()->lng }},
+        ],
       },
-      zoom: {{ $map->zoom }},
-      noClear: true,
-      mapTypeId: 'satellite',
-      navigationControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      tilt: 0
-    });
-
-    var entryMarker = new google.maps.Marker({
-      position: { 
-        lat: {{ $map->center->lat }}, 
-        lng: {{ $map->center->lng }}
-      },
-      map: map
-    });
-
-    var drawingManager = new google.maps.drawing.DrawingManager({
-      drawingMode: 'marker',
-      drawingControl: true,
-      drawingControlOptions: {
-        position: google.maps.ControlPosition.TOP_CENTER,
-        drawingModes: ['marker', 'polygon', 'polyline']
-      },
-      markerOptions: {
-        // icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-      },
-      polygonOptions: {
-        fillColor: '#00ff80',
-        fillOpacity: 0.3,
-        strokeWeight: 1,
-        clickable: false,
-        editable: true,
-        zIndex: 1
-      },
-      polylineOptions: {
-        strokeColor: '#ffff00',
-        strokeWeight: 4,
-        clickable: true,
-        editable: true,
-        zIndex: 2
+      properties: {
+        activity: "Entry",
       }
-    });
-    drawingManager.setMap(map);
-
-    var infoWindow = new google.maps.InfoWindow();
-
-    // var controls = document.getElementById('controls');
-
-    var actions = {
-      'data-save': {
-        click: function() {
-          //use this method to store the data somewhere,
-          //e.g. send it to a server
-          map.data.toGeoJson(function(json) {
-            data = json;
-          });
-
-        }
-      },
-      'data-show': {
-        click: function() {
-
-          alert('you may send this JSON-string to a server and store it there:\n\n' +
-            JSON.stringify(data))
-        }
-      },
-      'data-load': {
-        click: function() {
-          //use this method to load the data from somwhere
-          //e.g. from a server via loadGeoJson
-
-          map.data.forEach(function(f) {
-            map.data.remove(f);
-          });
-          map.data.addGeoJson(data)
-        },
-        init: true
-      },
-      'data-clear': {
-        click: function() {
-          //use this method to clear the data
-          //when you also want to remove the data on the server 
-          //send a geoJSON with empty features-array to the server
-
-          map.data.forEach(function(f) {
-            map.data.remove(f);
-          });
-          data = {
-            type: "FeatureCollection",
-            features: []
-          };
-        }
-      }
-    };
-
-    // for (var action in fx) {
-    //   var o = ctrl.querySelector('input[id=' + action + ']');
-    //   google.maps.event.addDomListener(o, 'click', fx[action].click);
-    //   if (fx[action].init) {
-    //     google.maps.event.trigger(o, 'click');
-    //   }
-    // }
-
-    google.maps.event.addListener(map.data, 'mouseover', function(e) {
-      var f = e.feature.getGeometry();
-      if (f.getType() === 'LineString') {
-        win.setOptions({
-          content: 'Linear Feet: ' + calculateLength(f),
-          pixelOffset: new google.maps.Size(0, -40),
-          map: map,
-          position: e.feature.getGeometry().get()
-        });
-      }
-      if (f.getType() === 'Polygon') {
-        win.setOptions({
-          content: 'Acres: ' + calculateArea(f),
-          pixelOffset: new google.maps.Size(0, -40),
-          map: map,
-          position: e.feature.getGeometry().get()
-        });
-      }
-      if (f.getType() === 'Marker') {
-        win.setOptions({
-          content: 'Entrance',
-          pixelOffset: new google.maps.Size(0, -40),
-          map: map,
-          position: e.feature.getGeometry().get()
-        });
-      }
-    });
-
-    google.maps.event.addListener(drawingManager, 'polylinecomplete', function(line) {
-        calculateLength(line);
-      google.maps.event.addListener(line.getPath(), 'insert_at', function(index, obj) {
-        calculateLength(line);
-      });
-      google.maps.event.addListener(line.getPath(), 'set_at', function(index, obj) {
-        calculateLength(line);
-      });
-      google.maps.event.addListener(line.getPath(), 'remove_at', function(index, obj) {
-        calculateLength(line);
-      });
-      google.maps.event.addListener(line.getPath(), 'dragend', function(index, obj) {
-        calculateLength(line);
-      });
-    });
-
-    google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
-        calculateArea(polygon);
-      google.maps.event.addListener(polygon.getPath(), 'insert_at', function(index, obj) {
-        calculateArea(polygon);
-      });
-      google.maps.event.addListener(polygon.getPath(), 'set_at', function(index, obj) {
-        calculateArea(polygon);
-      });
-      google.maps.event.addListener(polygon.getPath(), 'remove_at', function(index, obj) {
-        calculateArea(polygon);
-      });
-      google.maps.event.addListener(polygon.getPath(), 'dragend', function(index, obj) {
-        calculateArea(polygon);
-      });
-    }); 
+    },
+  ]
+};
+@endif
+var center = { lat: {{ $map->getCenter()->lat }}, lng: {{ $map->getCenter()->lng }} };
+var zoom = {{ $map->getZoom() }};
+var map;
+var features = {
+  polygons: [],
+  lines: [],
+  markers: [],
+  area: 0,
+  length: 0
+};
+var win;
+var styles = {
+  polygon: {
+    fillColor: '#00ff80',
+    fillOpacity: 0.3,
+    strokeColor: '#008840',
+    strokeWeight: 1,
+    clickable: true,
+    editable: true,
+    zIndex: 1
+  },
+  polyline: {
+    strokeColor: '#ffff00',
+    strokeWeight: 3,
+    clickable: true,
+    editable: true,
+    zIndex: 2
+  },
+  marker: {
+    clickable: true,
+    draggable: true,
+    zIndex: 3
   }
+}
 
-  function refreshData() {
-    map.data.toGeoJson(function(json) {
-      data = json;
-    });
-    for (var i = 0; i < data.features.length; i++) {
-      console.log(data.feature[i]);
-      parseGeometry(f.getGeometry());
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: center,
+    zoom: zoom,
+    noClear: true,
+    mapTypeId: 'satellite',
+    navigationControl: true,
+    mapTypeControl: false,
+    streetViewControl: false,
+    tilt: 0
+  });
+
+  // initialize info windows
+  win = new google.maps.InfoWindow({
+    pixelOffset: new google.maps.Size(0, -40)
+  });
+
+  // for adding future edit event handlers
+  map.data.addListener('addfeature', featureAdded);
+
+  // load map features from geojson
+  map.data.addGeoJson(imported);
+
+  calculateArea();
+  calculateLength();
+
+  // initialize drawing tools
+  var drawingManager = new google.maps.drawing.DrawingManager({
+    // drawingMode: 'marker',
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: ['polygon', 'polyline', 'marker']
+    },
+    polygonOptions: styles.polygon,
+    polylineOptions: styles.polyline,
+    markerOptions: styles.marker
+  });
+  drawingManager.setMap(map);
+  drawingManager.addListener('polygoncomplete', function(polygon) {
+    if (polygon.getPath().getLength() < 3) {
+      alert('Polygons must have 3 or more points.');
+      polygon.getPath().clear();
+    } else {
+      addFeature('Polygon', polygon.getPath());
+      polygon.setMap(null);
+      calculateArea();
     }
-  }
-
-  function parseGeometry(g) {
-    switch(g.getType()) {
-      case 'LineString':
-        stats.lines++;
-        break;
-      case 'MultiLineString':
-        for (var i = 0; i < g.getLength(); i++ ) {
-          parseGeometry(g.getAt(i));
-        }
-        break;
-      case 'Polygon':
-        stats.polygons++;
-        break;
-      case 'MultiPolygon':
-        for (var i = 0; i < g.getLength(); i++ ) {
-          parseGeometry(g.getAt(i));
-        }
-        break;
-      case 'GeometryCollection':
-        for (var i = 0; i < g.getLength(); i++ ) {
-          parseGeometry(g.getAt(i));
-        }
-        break;
-      case 'Point':
-        stats.points++;
-        break;
+  });
+  drawingManager.addListener('polylinecomplete', function(line) {
+    if (line.getPath().getLength() < 2) {
+      alert('Lines must have 2 or more points.');
+      line.getPath().clear();
+      // line.setMap(null);
+    } else {
+      addFeature('Polyline', line.getPath());
+      line.setMap(null);
+      calculateLength();
     }
-    console.log(stats);
+  });
+  drawingManager.addListener('markercomplete', function(marker) {
+    addFeature('Point', marker.getPosition());
+    marker.setMap(null);
+    updateGeoJSON();
+  });
+
+  map.addListener('center_changed', updateViewport);
+  map.addListener('zoom_changed', updateViewport);
+
+  function updateViewport() {
+    document.getElementById('center').value = map.getCenter();
+    document.getElementById('zoom').value = map.getZoom();
   }
 
-  function calculateLength(f) {
-    var metersPerFeet = 0.3048;
-    var len = google.maps.geometry.spherical.computeLength(f.getPath());
-    len = len / metersPerFeet;                                 // convert to feet
-    len = Math.round(len);                                     // round to nearest foot
-    document.getElementById('linear_feet').value = len;
-    return len;
-  }
+  updateViewport();
+}
 
-  function calculateArea(f) {
-    var squareMetersPerAcre = 4046.86;
-    var area = google.maps.geometry.spherical.computeArea(f.getPath());
-    area = area / squareMetersPerAcre;                         // convert to acres
-    area = Math.round(area * 100) / 100;                       // round to nearest .01 acre
-    document.getElementById('acreage').value = area;
-    return area;
+function featureAdded(e) {
+  switch(e.feature.getGeometry().getType()) {
+    case 'Polygon':
+      addFeature('Polygon', e.feature.getGeometry().getAt(0).getArray());
+      break;
+    case 'LineString':
+      addFeature('Polyline', e.feature.getGeometry().getArray());
+      break;
+    case 'Point':
+      addFeature('Point', e.feature.getGeometry().get());
   }
+  map.data.remove(e.feature);
+}
 
-  // function placeMarker(location) {
-  //   var feature = new google.maps.Data.Feature({
-  //     geometry: location
-  //   });
-  //   map.data.add(feature);
-  // }
-  // google.maps.event.addListener(map, 'click', function(event) {
-  //   placeMarker(event.latLng);
-  // });
+function addFeature(type, path) {
+  switch(type) {
+    case 'Polygon':
+      var polygon = new google.maps.Polygon(styles.polygon);
+      polygon.setPath(path);
+      // polygon.addListener('mouseover', infoWinPolygon);
+      // polygon.addListener('mouseout', infoWinClose);
+      polygon.getPath().addListener('insert_at', calculateArea)
+      polygon.getPath().addListener('set_at', calculateArea);
+      polygon.getPath().addListener('remove_at', calculateArea);
+      polygon.getPath().addListener('dragend', calculateArea);
+      polygon.addListener('rightclick', function(e) {
+        if (e.vertex == undefined) return;
+        if (polygon.getPath().getLength() == 3) {
+          polygon.setMap(null);
+          features.polygons = features.polygons.filter(isValid);
+          // console.log('polygon removed');
+        }
+        else {
+          polygon.getPath().removeAt(e.vertex);
+        }
+        calculateArea();
+      });   
+      features.polygons.push(polygon);
+      polygon.setMap(map);
+      break;
+
+    case 'Polyline':
+      var line = new google.maps.Polyline(styles.polyline);
+      line.setPath(path);
+      // line.addListener('mouseover', infoWinLine);
+      // line.addListener('mouseout', infoWinClose);
+      line.getPath().addListener('insert_at', calculateLength);
+      line.getPath().addListener('set_at', calculateLength);
+      line.getPath().addListener('remove_at', calculateLength);
+      line.getPath().addListener('dragend', calculateLength);
+      line.addListener('rightclick', function(e) {
+        if (e.vertex == undefined) return;
+        if (line.getPath().getLength() == 2) {
+          line.setMap(null);
+          features.lines = features.lines.filter(isValid);
+          // console.log('line removed');
+        }
+        else {
+          line.getPath().removeAt(e.vertex);
+        }
+        calculateLength();
+      }); 
+      features.lines.push(line);
+      line.setMap(map);
+      break;
+
+    case 'Point':
+      var marker = new google.maps.Marker(styles.marker);
+      marker.setPosition(path);
+      marker.setAnimation(google.maps.Animation.DROP);
+      // marker.addListener('mouseover', infoWinMarker);
+      // marker.addListener('mouseout', infoWinClose);
+      marker.addListener('drag', function(e) {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      });
+      marker.addListener('dragend', function(e) {
+        marker.setAnimation(null);
+      })
+      marker.addListener('rightclick', function(e) {  
+        marker.setMap(null);
+        features.markers = features.markers.filter(isValid); 
+        // console.log('marker removed');
+        updateGeoJSON();
+      });
+      features.markers.push(marker);
+      marker.setMap(map);
+      break;
+  }
+}
+function isValid(f) {
+  return f.getMap() != null;
+}
+
+function calculateArea() {
+  var squareMetersPerAcre = 4046.86;
+  var area = 0;
+  var polygon;
+  for (var i = 0; i < features.polygons.length; i++) {
+    polygon = features.polygons[i];
+    area += google.maps.geometry.spherical.computeArea(polygon.getPath());
+  } 
+  area = area / squareMetersPerAcre;                         // convert to acres
+  area = Math.round(area * 100) / 100;                       // round to nearest .01 acre
+  document.getElementById('acreage').value = features.area = area;
+  updateGeoJSON();
+  return area;
+}
+
+function calculateLength() {
+  var metersPerFeet = 0.3048;
+  var len = 0;
+  var line;
+  for (var i = 0; i < features.lines.length; i++) {
+    line = features.lines[i];
+    len += google.maps.geometry.spherical.computeLength(line.getPath());
+  } 
+  len = len / metersPerFeet;                                 // convert to feet
+  len = Math.round(len);                                     // round to nearest foot
+  document.getElementById('linear_feet').value = features.length = len;
+  updateGeoJSON();
+  return len;
+}
+
+function updateGeoJSON() {
+  // console.log('generating GeoJSON')
+  var data = new google.maps.Data;
+  features.polygons.forEach(function(polygon, i) {
+    // console.log('polygon: ' + polygon.getPath().getArray());
+    data.add({geometry: new google.maps.Data.Polygon([polygon.getPath().getArray()]), properties: { description: 'Plowing' }});
+  });
+  features.lines.forEach(function(line, i) {
+    // console.log('polyline: ' + line.getPath().getArray());
+    data.add({geometry: new google.maps.Data.LineString(line.getPath().getArray()), properties: { description: 'Shoveling' }});
+  });
+  features.markers.forEach(function(marker, i) {
+    // console.log('marker: ' + marker.getPosition());
+    data.add({geometry: new google.maps.Data.Point(marker.getPosition()), properties: { description: 'Entrance' }});
+  });
+  data.toGeoJson(function(json) {
+    document.getElementById('geojson').value = JSON.stringify(json);
+  });
+}
+
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=drawing&callback=initMap"
-     async defer></script>
-<div class="field">
-  <label class="label" for="linear_feet">Linear Feet</label>
-  <div class="control">
-    <input type="text" class="input" id="linear_feet" name="linear_feet" placeholder="Linear Feet">
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=geometry,drawing&callback=initMap" async defer></script>
+<input type="hidden" class="input" id="geojson" name="geojson" placeholder="GeoJSON">
+<input type="hidden" class="input" id="zoom" name="zoom" placeholder="Zoom">
+<input type="hidden" class="input" id="center" name="center" placeholder="Center">
+<div class="columns is-multiline">
+  <div class="column is-half">
+    <div class="field">
+      
+      <div class="control">
+        <label class="label" for="linear_feet">Linear Feet</label> <input type="text" class="input" id="linear_feet" name="linear_feet" placeholder="Linear Feet">
+      </div>
+    </div>
   </div>
-</div>
-<div class="field">
-  <label class="label" for="acreage">Acreage</label>
-  <div class="control">
-    <input type="text" class="input" id="acreage" name="acreage" placeholder="Acreage">
+  <div class="column is-half">
+    <div class="field">
+      
+      <div class="control">
+        <label class="label" for="acreage">Acreage</label> <input type="text" class="input" id="acreage" name="acreage" placeholder="Acreage">
+      </div>
+    </div>
+  </div>
+  <div class="column is-full">
+    <button type="submit" class="button is-link">Save</button>
   </div>
 </div>
