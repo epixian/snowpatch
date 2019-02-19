@@ -58,30 +58,37 @@
 
 		
 		<div class="column is-half is-full-mobile">
-			<div class="field">
-				<label class="label" for="country">Acreage</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('acreage') ? 'is-danger' : '' }}" name="acreage" placeholder="Acreage" value="{{ old('acreage') }}">
+
+			<div class="columns">
+				<div class="field column">
+					<label class="label" for="country">Acreage</label>
+					<div class="control">
+						<input type="text" class="input {{ $errors->has('acreage') ? 'is-danger' : '' }}" name="acreage" placeholder="Acreage" value="{{ old('acreage') }}">
+					</div>
+				</div>
+				<div class="field column">
+					<label class="label" for="linear_feet">Linear Feet</label>
+					<div class="control">
+						<input type="text" class="input {{ $errors->has('linear_feet') ? 'is-danger' : '' }}" name="linear_feet" placeholder="Linear feet" value="{{ old('linear_feet') }}">
+					</div>
 				</div>
 			</div>
-			<div class="field">
-				<label class="label" for="linear_feet">Linear Feet</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('linear_feet') ? 'is-danger' : '' }}" name="linear_feet" placeholder="Linear feet" value="{{ old('linear_feet') }}">
+
+			<div class="columns">
+				<div class="field column">
+					<label class="label" for="type">Type</label>
+					<div class="control">
+						<input type="text" class="input {{ $errors->has('type') ? 'is-danger' : '' }}" name="type" placeholder="Type" value="{{ old('type') }}">
+					</div>
+				</div>
+				<div class="field column">
+					<label class="label" for="status">Status</label>
+					<div class="control">
+						<input type="text" class="input {{ $errors->has('status') ? 'is-danger' : '' }}" name="status" placeholder="Status" value="{{ old('status') }}">
+					</div>
 				</div>
 			</div>
-			<div class="field">
-				<label class="label" for="type">Type</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('type') ? 'is-danger' : '' }}" name="type" placeholder="Type" value="{{ old('type') }}">
-				</div>
-			</div>
-			<div class="field">
-				<label class="label" for="status">Status</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('status') ? 'is-danger' : '' }}" name="status" placeholder="Status" value="{{ old('status') }}">
-				</div>
-			</div>
+
 			<div class="box">
 				<div class="columns">
 					<div class="field column">
