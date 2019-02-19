@@ -23,3 +23,6 @@ Route::post('/organizations/{organization}/contact', 'OrganizationContactsContro
 Route::patch('/organizations/{organization}/contact', 'OrganizationContactsController@update');
 
 Route::get('/jobsites/{jobsite}/map', 'JobsiteMapsController@show');
+Route::get('/jobsites/{jobsite}/map/edit', 'JobsiteMapsController@edit');
+Route::post('jobsites/{jobsite}/map', 'JobsiteMapsController@store');
+Route::patch('jobsites/{jobsite}/map', 'JobsiteMapsController@update');
