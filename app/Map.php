@@ -2,11 +2,22 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Map extends Model
 {
+    
+    // $table->increments('id');
+    // $table->unsignedInteger('jobsite_id');
+    // $table->string('name')->nullable();
+    // $table->string('status')->default('draft');
+    // $table->point('map_center')->nullable();
+    // $table->unsignedTinyInteger('map_zoom')->default(18);
+    // $table->string('map_type')->default('satellite');
+    // $table->timestamps();
+    protected static $validate = [
+    ];
+
     /**
      * All of the relationships to be touched when changes occur.
      *
@@ -27,52 +38,43 @@ class Map extends Model
      */
     public function features()
     {
-    	return $this->hasOne(MapFeature::class);
+    	return $this->hasMany(MapFeature::class);
     }  
 
     /**
      * @param \App\MapFeature $feature [description]
      */
-    public function addFeature(MapFeature $feature)
+    public function setFeature(MapFeature $feature)
     {
-    	$this->features()->create(compact('feature'));
+    	$this->features->updateOrCreate(compact('feature'));
     }
 
- //    /**
- //     * @return 
- //     */
-	// public function center()
-	// {
-	// 	if ($this->map_center) 
-	// 	{
-	// 		$result = DB::select('
-	// 			select ST_Y(map_center) as lat, ST_X(map_center) as lng 
-	// 			from maps 
-	// 			where jobsite_id = :jobsite_id
-	// 		', 
-	// 		['jobsite_id' => $this->jobsite_id]);
-	// 		$center['lat'] = $result[0]->lat;
-	// 		$center['lng'] = $result[0]->lng;
-	// 		return (object) $center;
-	// 	}
-	// 	else
-	// 	{
-	// 		dd($this);
-	// 		// ST_Envelope()
-	// 	}
-	// } 
+    public function hasFeatures()
+    {
+    	return $this->features != null;
+    }
+
+    public function featuresAsGeoJSON($description = 'all')
+    {
+        return MapFeature::asGeoJSON($this, $description);
+    }
+
+    public function featuresFromGeoJSON($json, $updateCenter = true)
+    {
+        MapFeature::fromGeoJSON($this, $json, $updateCenter);
+    }
 
     public function type()
     {
     	return $this->map_type;
     }
 
-    public function zoom()
-    {
-		return $this->map_zoom;
-    }
+  //   public function zoom()
+  //   {
+		// return $this->map_zoom;
+  //   }
 
-	public function getCenterAttribute()
+	public function getCenter()
 	{
 		$center = unpack('LSRID/Cbyte_order/Lgeometry_type/dlongitude/dlatitude', $this->map_center);
 		return (object) [
@@ -90,41 +92,57 @@ class Map extends Model
 	 * 
 	 * @param object|array $latLng an object or array consisting of a latitude and a longitude
 	 */
-	public function setCenterAttribute($latLng)
-	{
-		$type = MapFeature::TYPE_POINT;
-		if (is_object($latLng) && property_exists('lat') && property_exists('lng')) 
-		{
-			$lat = $latLng->lat;
-			$lng = $latLng->lng;
-		}
-		else if (is_array($latLng))
+    public function setCenter($latLng)
+    {
+        // dd('one',$latLng);
+        $lat = 0;
+        $lng = 0;
+    	$type = MapFeature::TYPE_POINT;
+    	if (is_object($latLng) && property_exists('lat') && property_exists('lng')) 
+    	{
+    		$lat = $latLng->lat;
+    		$lng = $latLng->lng;
+    	}
+    	else if (is_array($latLng))
 		{
 			if (array_key_exists('lat', $latLng) && array_key_exists('lng', $latLng))
 			{
 				$lat = $latLng['lat'];
 				$lng = $latLng['lng'];
+                dd('two',$lat,$lng);
 			}
-			else if (count($latLng) == 2)
-			{
-				$lat = $latLng[0];
-				$lng = $latLng[1];
-			}
-		}
-		else
-			dd($latLng);
-		
-		$this->attributes['map_center'] = pack('LCLd2', 0, 1, $type, $lng, $lat);
-		$this->save();
-		return $this->center;
-	}
+			else 
+            {
+                if (count($latLng) == 2)
+    			{
+    				$lat = $latLng[0];
+    				$lng = $latLng[1];
+    			}
 
-	public function getZoomAttribute()
+            }
+		}
+		else if (is_string($latLng))
+        {
+			$latLng = str_replace(["(", "(", " "], "", $latLng);
+            list($lat, $lng) = explode(",", $latLng);
+        }
+        else 
+        {
+            dd('Not an object, array, or string: ' . $latLng);
+        }
+        $wkb = pack('LCLd2', 0, 1, $type, $lng, $lat);
+        // dd('four',$lat,$lng,$wkb);
+    	$this->map_center = $wkb;
+    	$this->save();
+    	return $this->center;
+    }
+
+	public function getZoom()
 	{
 		return $this->map_zoom;
 	}
 
-	public function setZoomAttribute($zoom)
+	public function setZoom($zoom)
 	{
 		$this->attributes['map_zoom'] = $zoom;
 		$this->save();
