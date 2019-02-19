@@ -99,4 +99,27 @@ class Jobsite extends Model
 		return self::$validate;
 	}
 
+
+	public function updateMap($features, $options)
+	{
+		$updateCenter = true;
+		if (array_key_exists('center', $options)) {
+			$updateCenter = false;
+			$this->map->setCenter($options['center']);
+		}
+		if (array_key_exists('zoom', $options))
+			$this->map->setZoom($options['zoom']);
+		$this->map->featuresFromGeoJSON($features, $updateCenter);
+		$this->save();
+	}
+
+	public function updateMeasurements($measurements)
+	{
+		// dd($measurements);
+		if (array_key_exists('linear_feet', $measurements))
+			$this->linear_feet = $measurements['linear_feet'];
+		if (array_key_exists('acreage', $measurements))
+			$this->acreage = $measurements['acreage'];
+		$this->save();
+	}
 }
