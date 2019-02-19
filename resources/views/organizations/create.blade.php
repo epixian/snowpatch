@@ -68,14 +68,24 @@
 		<div class="column is-half is-full-mobile">
 			<div class="field">
 				<label class="label" for="type">Type</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('type') ? 'is-danger' : '' }}" name="type" placeholder="Type" value="{{ old('type') }}">
+				<div class="select">
+					<select name="type">
+						<option value="1">Lead</option>
+						<option value="2">Client</option>
+						<option value="3">Vendor</option>
+						<option value="4">Subcontractor</option>
+					</select>
+					<input type="text" class="input {{ $errors->has('type') ? 'is-danger' : '' }}" placeholder="Type" value="{{ old('type') }}">
 				</div>
 			</div>
 			<div class="field">
 				<label class="label" for="status">Status</label>
-				<div class="control">
-					<input type="text" class="input {{ $errors->has('status') ? 'is-danger' : '' }}" name="status" placeholder="Status" value="{{ old('status') }}">
+				<div class="select">
+					<select name="status">
+						<option value="1">Current</option>
+						<option value="2">Archived</option>
+					</select>
+					<input type="text" class="input {{ $errors->has('status') ? 'is-danger' : '' }}" placeholder="Status" value="{{ old('status') }}">
 				</div>
 			</div>
 		</div>
