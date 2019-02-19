@@ -57,21 +57,37 @@ class JobsiteMapsController extends Controller
      * @param  \App\Map  $map
      * @return \Illuminate\Http\Response
      */
-    public function edit(Map $map)
+    public function edit(Jobsite $jobsite)
     {
-        //
+        $map = $jobsite->map;
+        return view('maps.edit', compact('map'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Map  $map
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Map $map)
+    public function update(Request $request, Jobsite $jobsite)
     {
-        //
+        // dd($request);
+        $geojson = $request->input('geojson');
+        $options = [];
+        if ($request->has('center'))
+            $options['center'] = $request->input('center');
+        if ($request->has('zoom')) 
+            $options['zoom'] = $request->input('zoom');
+        $jobsite->updateMap($geojson, $options);
+
+        $measurements = [];
+        if ($request->has('linear_feet')) 
+            $measurements['linear_feet'] = $request->input('linear_feet');
+        if ($request->has('acreage'))
+            $measurements['acreage'] = $request->input('acreage');
+        $jobsite->updateMeasurements($measurements);
+
+        return redirect('/jobsites/' . $jobsite->id);
     }
 
     /**
