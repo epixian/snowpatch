@@ -285,17 +285,17 @@ function updateGeoJSON() {
 <div class="columns is-multiline">
   <div class="column is-half">
     <div class="field">
-      
+      <label class="label" for="linear_feet">Linear Feet</label>
       <div class="control">
-        <label class="label" for="linear_feet">Linear Feet</label> <input type="text" class="input" id="linear_feet" name="linear_feet" placeholder="Linear Feet">
+        <input type="text" class="input" id="linear_feet" name="linear_feet" placeholder="Linear Feet">
       </div>
     </div>
   </div>
   <div class="column is-half">
     <div class="field">
-      
+      <label class="label" for="acreage">Acreage</label>
       <div class="control">
-        <label class="label" for="acreage">Acreage</label> <input type="text" class="input" id="acreage" name="acreage" placeholder="Acreage">
+        <input type="text" class="input" id="acreage" name="acreage" placeholder="Acreage">
       </div>
     </div>
   </div>
